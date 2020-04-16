@@ -15,9 +15,9 @@ To run this template you will need an existing project on openshift.
 ```
 oc login https://console.myopenshifturl.com
 
-oc new-project leantimedev --description="Leantime dev open source project management system" --display-name="Leantime-dev"
-oc policy add-role-to-user edit system:serviceaccount:leantimedev:default -n leantimedev
-oc project suitecrmdev
+oc new-project leantimedev --description="Leantime dev open source project management system"   --display-name="Leantime-dev"
+oc policy add-role-to-user edit system:serviceaccount:leantimedev:default   -n leantimedev
+oc project leantimedev
 ```
 
 Checkout this project 
@@ -31,7 +31,7 @@ git clone https://github.com/parkarteam/openshift-leantime.git
 
 ```
 cd openshift-leantime 
-oc new-app  -f openshift-template/leantime-template-dev.yaml -n leantimedev
+oc new-app  -f openshift-templates/leantime-template-dev.yaml -n leantimedev
 
 ```
 Allow for 15 to 20 mins for the application to be ready. 
@@ -69,7 +69,8 @@ When a new release is available the build can be changed to match the new versio
 For example if you need to use Leantime 2.1 Beta , run the below command
 
 ```
-oc set env bc/leantimedev-build DATABASE_NAME=https://github.com/Leantime/leantime/archive/v2.1-beta6.tar.gz -n leantimedev
+oc set env bc/leantimedev-build \ 
+DATABASE_NAME=https://github.com/Leantime/leantime/archive/v2.1-beta6.tar.gz -n leantimedev
 
 ```
 
@@ -95,6 +96,8 @@ Other parameters
 12. DATABASE_PASSWORD - Random Password is generated. 
 13. LEANTIME_RELEASE_URL - Leantime release url (default version is Leantime-V2.0.15). This can be changed after deployment. 
 
-
+## Debug
+This template creates a pod for leantime-installer. Locate the actual pod name by runnin oc get pods.
+View the detailed logs ''' oc get logs leantime-installer-sgdxm ```
 
 

@@ -54,7 +54,7 @@ objects:
                   sleep 5
                   oc start-build leantimedev-basebuild --follow -n ${NAMESPACE}  
                   sleep 20
-                  oc new-build --name=leantimedev-build  ${NAMESPACE}/leantime-basebuild~https://github.com/parkarteam/openshift-leantime.git   --context-dir=leantimeimage --strategy=docker --env=LEANTIME_RELEASE_URL=${LEANTIME_RELEASE_URL} -n ${NAMESPACE} 
+                  oc new-build --name=leantimedev-build  ${NAMESPACE}/leantimedev-basebuild~https://github.com/parkarteam/openshift-leantime.git   --context-dir=leantimeimage --strategy=docker --env=LEANTIME_RELEASE_URL=${LEANTIME_RELEASE_URL} -n ${NAMESPACE} 
                   sleep 60
                   oc start-build leantimedev-build --follow -n ${NAMESPACE}  
                   # App 
