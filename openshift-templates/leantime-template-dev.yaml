@@ -60,7 +60,7 @@ objects:
                   # App 
                   oc new-app --name=leantime ${NAMESPACE}/leantimedev-build:latest   -n ${NAMESPACE} 
                   sleep 20
-                  oc create secret generic leantimedev-secret   --from-literal="database_password=${DATABASE_PASSWORD}" --from-literal="database_user=${DATABASE_USER}" --from-literal="leantime_secret_token=${LEANTIME_SECRET_TOKEN}" --from-literal="lleantime_security_salt=sql${LEANTIME_SECURITY_SALT}" -n ${NAMESPACE}
+                  oc create secret generic leantimedev-secret   --from-literal="database_password=${DATABASE_PASSWORD}" --from-literal="database_user=${DATABASE_USER}" --from-literal="leantime_secret_token=${LEANTIME_SECRET_TOKEN}" --from-literal="leantime_security_salt=sql${LEANTIME_SECURITY_SALT}" --from-literal="mysql_user=${DATABASE_USER}" --from-literal="mysql_password=${DATABASE_PASSWORD}"  -n ${NAMESPACE}
                   oc set env dc/leantime --from=secret/leantimedev-secret  -n ${NAMESPACE} 
                   oc set env dc/leantime DATABASE_HOST=${DATABASE_SERVICE_NAME} -n ${NAMESPACE}
                   oc set env dc/leantime DATABASE_NAME=${DATABASE_NAME} -n ${NAMESPACE}
@@ -70,8 +70,8 @@ objects:
                   # sleep 5
                   oc expose svc/leantime -n ${NAMESPACE}
                   # deploy mysql 
-                  oc new-app --name=${DATABASE_SERVICE_NAME} -e MYSQL_USER=${DATABASE_USER}   -e MYSQL_PASSWORD=${DATABASE_PASSWORD} -e MYSQL_DATABASE=${DATABASE_NAME}   docker.io/centos/mysql-57-centos7:latest -n ${NAMESPACE}
-
+                  oc new-app --name=${DATABASE_SERVICE_NAME} -e MYSQL_DATABASE=${DATABASE_NAME}   docker.io/centos/mysql-57-centos7:latest -n ${NAMESPACE}
+                  oc set env dc/${DATABASE_SERVICE_NAME} --from=secret/suitecrmdev-secret  -n suitecrmdev
                   oc set resources dc/${DATABASE_SERVICE_NAME} --limits=memory=${MEMORY_MYSQL_LIMIT} 
 
               env:

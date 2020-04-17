@@ -20,18 +20,12 @@ oc policy add-role-to-user edit system:serviceaccount:leantimedev:default   -n l
 oc project leantimedev
 ```
 
-Checkout this project 
-
-```
-git clone https://github.com/parkarteam/openshift-leantime.git
-
-```
-
+ 
 ## Create app with the template
 
 ```
 cd openshift-leantime 
-oc new-app  -f openshift-templates/leantime-template-dev.yaml -n leantimedev
+oc new-app  -f https://raw.githubusercontent.com/parkarteam/openshift-leantime/master/openshift-templates/leantime-template-dev.yaml -n leantimedev
 
 ```
 Allow for 15 to 20 mins for the application to be ready. 
@@ -70,7 +64,7 @@ For example if you need to use Leantime 2.1 Beta , run the below command
 
 ```
 oc set env bc/leantimedev-build \ 
-DATABASE_NAME=https://github.com/Leantime/leantime/archive/v2.1-beta6.tar.gz -n leantimedev
+LEANTIME_RELEASE_URL=https://github.com/Leantime/leantime/archive/v2.1-beta6.tar.gz -n leantimedev
 
 ```
 
